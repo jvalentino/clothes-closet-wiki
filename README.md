@@ -1,11 +1,20 @@
 # References
 
+## User
+
 - [Scheduling Page](https://clothes-closet.herokuapp.com/) - The website used to schedule an appointment
 - [Admin Login Page](https://clothes-closet.herokuapp.com/login) - The page used for an admin to login to the management system
+
+## Developer
+
 - [Project Tracker](https://github.com/users/jvalentino/projects/2/views/1) - Used for keeping track of all the work that needs to be done on the system
 - [Front-end Source Code](https://github.com/jvalentino/clothes-closet-ui) - The source code for the ReactJS based front-end, meaning the web-based graphical user interface
 - [Backend Source Code](https://github.com/jvalentino/clothes-closet-rest) - The source code for the Java/Groovy Spring Boot based backend, meaning the backing services for the system including the Liquibase schema management for the datbaase.
 - [Appointment Settings Service](https://clothes-closet-rest.herokuapp.com/appointment/settings) - An example of one of the many backing RESTful services, this one dedicated to returning appointment availability.
+- [Google Cloud Application](https://console.cloud.google.com/welcome?project=clothes-closet-374119&pli=1) - The Google Cloud application used for managing the Oauth and calendar integrations.
+- [Front-end Heroku Application](https://dashboard.heroku.com/apps/clothes-closet) - The application runtime environment for the front-end
+- [Backend Heroku Application](https://dashboard.heroku.com/apps/clothes-closet-rest) - The applicaiton runtime environment for the back-end
+- [Heroku Database](https://data.heroku.com/datastores/fdf20365-dadc-4804-8dd1-eb485d7f3aea) - The PostgreSQL database used for securely storing data.
 
 # User Experience
 
@@ -134,13 +143,26 @@ The Heroku environment consits of two applications, each of which maps to a web-
 - https://dashboard.heroku.com/apps/clothes-closet-rest maps to https://clothes-closet-rest.herokuapp.com, though you need to hit an accessible endpoint like https://clothes-closet-rest.herokuapp.com/appointment/settings to see it
 - https://dashboard.heroku.com/apps/clothes-closet maps to https://clothes-closet.herokuapp.com/
 
+![01](./wiki/22.png)
+
 The backend is otherwise directly mapped to a Heroku managed PostgreSQL instance for storing data:
 
 ![01](./wiki/erd.png)
 
-
+However, the basic database plan (https://data.heroku.com/datastores/fdf20365-dadc-4804-8dd1-eb485d7f3aea) costs $9 a month. We can't use the mini plan because it is limited to 10,000 rows of data.
 
 ## (3) Google Cloud
 
-TBD
+> Google Cloud Platform, offered by Google, is a suite of cloud computing services that runs on the same infrastructure that Google uses internally for its end-user products, such as Google Search, Gmail, Google Drive, and YouTube.
+
+- https://en.wikipedia.org/wiki/Google_Cloud_Platform
+
+This system specifically uses two different integrations, as designated by the different credentials:
+
+![01](wiki/23.png)
+
+- clothes-closet-web is the OAuth credentials, used for allowing signing in via google
+- the service account is what is used to do the calender interaction
+
+There is no charge for the level of usage currently in place, which is less than 10,000 requests per day.
 
