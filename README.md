@@ -1,3 +1,8 @@
+# References
+
+- [Project Tracker](https://github.com/users/jvalentino/projects/2/views/1) - Used for keeping track of all the work that needs to be done on the system
+- 
+
 # System Overview
 
 ## User Experience
@@ -8,15 +13,15 @@ The purpose of this system is to be able to schedule and manage family appointme
 
 It starts with the parent or guardian going to the website at https://clothes-closet.herokuapp.com/, entering in their contact information, entering in the students that are to come to the appointment (by Student ID), and then selecting an available appointment date and time. The available appointment times are determined by events on the Clothes Closet Google Calendar which are labeled as open, and are otherwise not during are already booked appointment.
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/14.png)
+![01](wiki/14.png)
 
 When the "Schedule Appointment" button is pressed, the system checks against our own internal list of eligible students, which were given to us by the counselor. If a student is not on our list, they will receive an error stating so:
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/15.png)
+![01](wiki/15.png)
 
 Otherwise, if everything is valid, the appointment will be scheduled:
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/16.png)
+![01](wiki/16.png)
 
 #### Appointment Notification
 
@@ -30,11 +35,11 @@ The intention is for the parent/guardian to be notified 24-hour prior via text m
 
 It starts with the Clothes Closet Goolge calendar, which consits of times that it is avialable for appointment as designated by events labeled as "Open":
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/17.png)
+![01](wiki/17.png)
 
 ...and events that are the result of a family booking:
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/18.png)
+![01](wiki/18.png)
 
 Note that none of the appointment details are available outside of the Clothes Closet Calendar, and the administrator protected portion of the online system.
 
@@ -46,13 +51,13 @@ Login is done via a Google Account at https://clothes-closet.herokuapp.com/login
 
 Once logged in the admin has the ability to search through all appoinments by date and/or name:
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/19.png)
+![01](wiki/19.png)
 
 #### Appointment Printing
 
 As during the appointment personal has to keep track of what each student took and adhere to certain limits, clicking on the "Print" button next to an apppointment brings up a version of the current form in use:
 
-![01](/Users/john.valentino/workspaces/personal/clothes-closet-rest/wiki/20.png)
+![01](wiki/20.png)
 
 #### Appointment Selection
 
