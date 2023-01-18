@@ -90,6 +90,12 @@ This refers to taking a spreadsheet as issued by the district and uploading it i
 
 TBD: A user experience does not currently exist for this so its data must be entered manually by John Valentino directly into its database.
 
+### Reporting
+
+This refers to the ability to pull numbers form a given date range:
+
+![01](./wiki/24.png)
+
 # System Overview
 
 ![01](./wiki/clothes-closet.drawio.png)
