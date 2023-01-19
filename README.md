@@ -2,8 +2,8 @@
 
 ## User
 
-- [Scheduling Page](https://clothes-closet.herokuapp.com/) - The website used to schedule an appointment
-- [Admin Login Page](https://clothes-closet.herokuapp.com/login) - The page used for an admin to login to the management system
+- [Scheduling Page](https://www.clothescloset.app/) - The website used to schedule an appointment
+- [Admin Login Page](https://www.clothescloset.app//login) - The page used for an admin to login to the management system
 
 ## Developer
 
@@ -82,7 +82,7 @@ This is where additonal people can be added to the appointment, quantities can b
 
 This refers to the settings by gender that are used to designate the quantities that one can take.
 
-TBD: A user experience does not currently exist for this so its data must be entered manually by John Valentino directly into its database.
+![01](./wiki/26.png)
 
 ### Student ID Upload
 
@@ -95,6 +95,12 @@ TBD: A user experience does not currently exist for this so its data must be ent
 This refers to the ability to pull numbers form a given date range:
 
 ![01](./wiki/24.png)
+
+### Locales
+
+This page is not actually protected, so anyone can get to it. Its purpose is to list all of the translation text used on the home page for appointment scheduling.
+
+![01](./wiki/27.png)
 
 # System Overview
 
@@ -132,7 +138,7 @@ Heroku is used as the application runtime environment, where the frontend and ba
 
 - https://www.heroku.com/dynos
 
-We are specifically using the Eco Dynos, which are smallest available:
+We were originally using the Eco Dynos, which are smallest available:
 
 > The Eco dynos plan provides 1000 dyno hours for $5 per month. This dyno hours pool is shared by all Eco dynos in your account. The Eco dynos plan always renews on the first day of each month. If you subscribe to Eco after the first day, you are still charged the full $5 for that month.
 >
@@ -144,12 +150,14 @@ We are specifically using the Eco Dynos, which are smallest available:
 
 - https://devcenter.heroku.com/articles/eco-dyno-hours
 
+However, the Eco Dynos do not allow for custom SSL certificates, so I had to upgrade to Basic Dynes:
+
+![01](./wiki/25.png)
+
 The Heroku environment consits of two applications, each of which maps to a web-based URL to make them accessible
 
 - https://dashboard.heroku.com/apps/clothes-closet-rest maps to https://clothes-closet-rest.herokuapp.com, though you need to hit an accessible endpoint like https://clothes-closet-rest.herokuapp.com/appointment/settings to see it
 - https://dashboard.heroku.com/apps/clothes-closet maps to https://clothes-closet.herokuapp.com/
-
-![01](./wiki/22.png)
 
 The backend is otherwise directly mapped to a Heroku managed PostgreSQL instance for storing data:
 
@@ -171,4 +179,25 @@ This system specifically uses two different integrations, as designated by the d
 - the service account is what is used to do the calender interaction
 
 There is no charge for the level of usage currently in place, which is less than 10,000 requests per day.
+
+## (4) GoDaddy
+
+https://www.godaddy.com/ just happens to be the means by which the custom domain of https://clothescloset.app was purchased, including it SSL certificate that is needed for that https part of the URL. This has become required as most browsers won't even allow you to go to an http site by default anymore. Using this with Heroku though required some special DNS-level configuraiton.
+
+![01](wiki/dns.png)
+
+![01](wiki/heroku-ssl.png)
+
+# System Cost
+
+| Platform | URL                                                          | Cost                  | Description                                        |
+| -------- | ------------------------------------------------------------ | --------------------- | -------------------------------------------------- |
+| Heroku   | https://dashboard.heroku.com/apps/clothes-closet/resources   | $7/month or $84/year  | Front-end application runtime using the Basic Dyno |
+| Heroku   | https://dashboard.heroku.com/apps/clothes-closet-rest/resources | $7/month or $84/year  | Backend application runtime using the Basic Dyno   |
+| Heroku   | https://dashboard.heroku.com/apps/clothes-closet-rest/resources | $9/month or $108/year | Postges database usingthe Basic Plan               |
+| GoDaddy  | https://account.godaddy.com/receipts                         | $17.99/year           | Domain name with SSL certificate                   |
+
+Total Cost: $293.99/year
+
+
 
