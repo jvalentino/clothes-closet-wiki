@@ -182,11 +182,39 @@ There is no charge for the level of usage currently in place, which is less than
 
 ## (4) GoDaddy
 
+### Domain/SSL
+
 https://www.godaddy.com/ just happens to be the means by which the custom domain of https://clothescloset.app was purchased, including it SSL certificate that is needed for that https part of the URL. This has become required as most browsers won't even allow you to go to an http site by default anymore. Using this with Heroku though required some special DNS-level configuraiton.
 
 ![01](wiki/dns.png)
 
 ![01](wiki/heroku-ssl.png)
+
+### Email
+
+You would think that I could just use Google Cloud, but service accounts aren't allowed to send email according to the internet.
+
+I then had to add basic email support to the domain, and then setup the mailbox:
+
+![01](wiki/28.png)
+
+After creating a new email account, you have to manually enable SMTP:
+
+![01](wiki/29.png)
+
+The SMTP settings where then a matter of trial and error:
+
+```properties
+spring.mail.host=smtpout.secureserver.net
+spring.mail.port=587
+spring.mail.username=noreply@clothescloset.app
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+```
+
+https://www.godaddy.com/help/server-and-port-settings-for-workspace-email-6949 was the only place to get it correct.
+
+
 
 # System Cost
 
@@ -196,8 +224,9 @@ https://www.godaddy.com/ just happens to be the means by which the custom domain
 | Heroku   | https://dashboard.heroku.com/apps/clothes-closet-rest/resources | $7/month or $84/year  | Backend application runtime using the Basic Dyno   |
 | Heroku   | https://dashboard.heroku.com/apps/clothes-closet-rest/resources | $9/month or $108/year | Postges database usingthe Basic Plan               |
 | GoDaddy  | https://account.godaddy.com/receipts                         | $17.99/year           | Domain name with SSL certificate                   |
+| GoDaddy  | https://account.godaddy.com/receipts                         | $23.88/year           | Email Address for SMTP                             |
 
-Total Cost: $293.99/year
+Total Cost: $317.87/year
 
 
 
