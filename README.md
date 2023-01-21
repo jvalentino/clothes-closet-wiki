@@ -102,6 +102,12 @@ This page is not actually protected, so anyone can get to it. Its purpose is to 
 
 ![01](./wiki/27.png)
 
+### Email Notification
+
+Around 24-hour prior to the appointment, a reminder email will be sent to the guardian provided email, and also copy the clothes closet email address as well:
+
+![01](./wiki/30.png)
+
 # System Overview
 
 ![01](./wiki/clothes-closet.drawio.png)
@@ -202,10 +208,20 @@ After creating a new email account, you have to manually enable SMTP:
 
 ![01](wiki/29.png)
 
+Since this can't be just this easy, consider the GoDaddy SMTP limits the number of emails to 25 per day, which is useless. Thankfully GoDaddy sets up Office3655, so you can just use their SMTP with the following limits:
+
+> Office 365 users are limited by the following: 
+>
+> - 10,000 sent email messages per day
+> - 500 recipients total for a single email
+> - 30 emails sent per minute
+
+https://support.nutshell.com/hc/en-us/articles/360013686553-Email-sending-limitations
+
 The SMTP settings where then a matter of trial and error:
 
 ```properties
-spring.mail.host=smtpout.secureserver.net
+spring.mail.host=smtp.office365.com
 spring.mail.port=587
 spring.mail.username=noreply@clothescloset.app
 spring.mail.properties.mail.smtp.auth=true
