@@ -22,6 +22,8 @@ The purpose of this system is to be able to schedule and manage family appointme
 
 ## (1) Parent/Guardian Experience
 
+### Time Slot Available
+
 It starts with the parent or guardian going to the website at https://clothes-closet.herokuapp.com/, entering in their contact information, entering in the students that are to come to the appointment (by Student ID), and then selecting an available appointment date and time. The available appointment times are determined by events on the Clothes Closet Google Calendar which are labeled as open, and are otherwise not during are already booked appointment.
 
 ![01](wiki/14.png)
@@ -34,11 +36,21 @@ Otherwise, if everything is valid, the appointment will be scheduled:
 
 ![01](wiki/16.png)
 
-### Appointment Notification
+### Time Slot Not Available
 
-Not done yet!
+In the event no time slots are available, the end user will be given the option to be added to the wait lit:
+
+![01](wiki/34.png)
+
+### Appointment Email Notification
+
+![01](./wiki/30.png)
 
 The intention is for the parent/guardian to be notified 24-hour prior via text message if they gave a mobile phone number, and then also by email.
+
+### Appointment SMS Notification
+
+Not done yet!
 
 ## (2) Administrator
 
@@ -107,6 +119,20 @@ This page is not actually protected, so anyone can get to it. Its purpose is to 
 Around 24-hour prior to the appointment, a reminder email will be sent to the guardian provided email, and also copy the clothes closet email address as well:
 
 ![01](./wiki/30.png)
+
+### Wait List
+
+The purpose of this view is to be able to manage appointments that could not be scheduled because of a lack of time slots, and intead were put on the wait list. The options hwere are you:
+
+1. Search By First or Last Name
+2. View/Assign - This allows you to pick any time slot on the calender, whether available or not. By doing this the appointment is moved from the wait list, and also will have a Google Calendar event createf for it. 
+3. Delete - This deletes the appointment from the wait list
+
+![01](./wiki/31.png)
+
+![01](./wiki/32.png)
+
+![01](./wiki/33.png)
 
 # System Overview
 
