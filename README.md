@@ -74,21 +74,53 @@ Login is done via a Google Account at https://clothes-closet.herokuapp.com/login
 
 Once logged in the admin has the ability to search through all appoinments by date and/or name:
 
-![01](wiki/19.png)
+![01](wiki/35.png)
 
-### Appointment Printing
+#### Appointment Selection
+
+Pressing the "View/Edit" button next to an appointment will bring up the data entry screen:
+
+![01](./wiki/36.png)
+
+This is where additonal people can be added to the appointment, quantities can be entered or updated, the appointment can cancelled, or the apoointment can be marked as a no-show.
+
+##### Appointment Printing
 
 As during the appointment personal has to keep track of what each student took and adhere to certain limits, clicking on the "Print" button next to an apppointment brings up a version of the current form in use:
 
 ![01](wiki/20.png)
 
-### Appointment Selection
+This is used for printing an individual appointment.
 
-Pressing the "Select" button next to an appointment will bring up the data entry screen:
+##### Add New Person
 
-![01](./wiki/21.png)
+The purpose of doing this is for when someone else shows to the appointment, like brother, uncle, whatever, that was not on the original appoinment.
 
-This is where additonal people can be added to the appointment, quantities can be entered or updated, and the appointment can also be cancelled.
+![01](./wiki/37.png)
+
+##### Cancel Appointment
+
+Clicking this button on an appointment will prompt you to ask if you are sure, and if you select "Yes" it will delete this appointment from both the system and the Google calendar.
+
+![01](./wiki/38.png)
+
+##### Appointment No-Show
+
+Clicking this button will prompt you to mark this appointment as a no-show. Doing this will keep the appointment and related event on teh coogle calender for historical purposes. More important, this means that any student a part of this appointment will not be able to be a prt of another apoointment for the semester if the parent/guardian tries to sign up again.
+
+![01](./wiki/39.png)
+
+#### Multi-Appointment Printing
+
+There are checkboxes next to each appointment, and checking them is used to do a group selection for the purpose of printing out multiple appointments at a time. The "Select All" button will check all the boxes, while the "Unselect All" button will uncheck them all.
+
+![01](./wiki/40.png)
+
+Clicking on the "Print Selected" button will have you download a PDF will all the appointments in it:
+
+![01](./wiki/41.png)
+
+
 
 ### Settings Update
 
@@ -100,7 +132,18 @@ This refers to the settings by gender that are used to designate the quantities 
 
 This refers to taking a spreadsheet as issued by the district and uploading it into our system.
 
-TBD: A user experience does not currently exist for this so its data must be entered manually by John Valentino directly into its database.
+The purpose of this page is to upload the list of eligible Students. This is done by taking the Excel spreadsheet that is given to us, saving it as a CSV file, and then pasting the content into the below text area. Note that doing this will erase all current eligible student information and replace it with what is given. The content will look like this:
+
+```
+Current Building Name,Student Id,Grade,Meal Status Name
+Arbor Creek Elementary,T01 ,01,Eligible For Free Meals
+Bedford Heights Elementary,T02 ,02,Eligible For Free Meals
+Bedford Junior High,T03 ,03,Eligible For Free Meals
+```
+
+It must have the data in the order ot School Name, Student ID, Grade, and Meal status.
+
+![01](./wiki/42.png)
 
 ### Reporting
 
