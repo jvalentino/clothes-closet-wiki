@@ -12,6 +12,7 @@
   * [(2) Administrator](#2-administrator)
     + [Calendar Management](#calendar-management)
     + [Login](#login)
+    + [Dashboard](#dashboard)
     + [Appointment Search](#appointment-search)
       - [Appointment Selection](#appointment-selection)
         * [Appointment Printing](#appointment-printing)
@@ -105,6 +106,12 @@ Note that none of the appointment details are available outside of the Clothes C
 ### Login
 
 Login is done via a Google Account at https://clothes-closet.herokuapp.com/login, meaning that we defer to Google's own authenitcation system, but then the user in question must be on our own explicit list of allowed admins.
+
+### Dashboard
+
+The purpose of this screen is to show summary stats for the current semester, highlight upcoming appointments, and notate appointments that have already passed and require attention.
+
+![01](wiki/43.png)
 
 ### Appointment Search
 
