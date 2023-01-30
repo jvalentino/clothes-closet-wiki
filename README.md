@@ -34,7 +34,7 @@
     + [Domain/SSL](#domainssl)
     + [Email](#email)
 - [System Cost](#system-cost)
-- - [Architectural Theory](#architectural-theory)
+- [Architectural Theory](#architectural-theory)
   * [2-Tier](#2-tier)
     + [Single Server (Rating: a dozen)](#single-server-rating-a-dozen)
     + [Dedicated Database Server (Rating: dozens)](#dedicated-database-server-rating-dozens)
