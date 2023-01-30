@@ -356,5 +356,260 @@ https://www.godaddy.com/help/server-and-port-settings-for-workspace-email-6949 w
 
 Total Cost: $317.87/year
 
+# Architectural Theory
+
+As I am using this system as a teaching tool, there have been lots of questions around scalability. In order to address those questions lets confine scalability as "a means of supporting variable and growing numbers of concurrent users." There are also two types of scalabilty:
+
+- **Vertical** - Add more power to make it do better. For example, you could add more and/or faster CPUs to a server in order to get better performance. This type of scaling is both limited, and not preferable. While you can boost your EC2 instance for example to the max memory and CPU possible, that limit is as far as you go go.
+- **Horizontal** - Add more instances to make it do better. While this can go a long way, and theoretically near infinite depending on the use case, this is more complicated that just improving hardware specifications, because it is entirely dependent on the architectrual context.
+
+## 2-Tier
+
+### Single Server (Rating: a dozen)
+
+There was no concept of separation of front-end and backend, and server-side scripting technologies would handle both aspects. Specificaly when a browser would make a request for a page, the backend would handle dynamically generating the HTML content  for the browser as a part of that one request. Generally, we would do this all on a single server:
+
+![01](wiki/step-1.png)
+
+Pros
+
+- None
+
+Cons
+
+- No separation between front-end and backend.
+- Resource contention between backend and database.
+- Session is maintained in server-memory, thus limiting the number of concurrent users.
+- A single user facing server, thus concurrent load is highly limited.
+- The more data that goes into the database, the slower it performs.
+- Core reliance on RDMS limits upper scalability.
+
+### Dedicated Database Server (Rating: dozens)
+
+Obviously with both the backend and the database on the same server, resource contention was high. This made the first obvious step to move the data persitence onto its own server:
+
+![01](wiki/step-2.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+
+Cons
+
+- No separation between front-end and backend.
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- Session is maintained in server-memory, thus limiting the number of concurrent users.
+- A single user facing server, thus concurrent load is highly limited.
+- The more data that goes into the database, the slower it performs.
+- Core reliance on RDMS limits upper scalability.
+
+### Multi-Backend (Rating: a hundred)
+
+Now to tackle the fact that we need more servers (and instances) to handle user load, we start adding more servers to run more backend instances. The result though is that we need a way to direct traffier to the appropriate instance based on load, which is where we get Load Balancers. A consequence though of using a load balancer with in-memory sessions though, is that only the instance which handles the initial user authentication has knowledge of that session, so that user is tied to that instance.
+
+![01](wiki/step-3.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+
+Cons
+
+- No separation between front-end and backend.
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- Session is maintained in server-memory, thus limiting the number of concurrent users.
+- You are paying for that second instance even when you don't need it.
+- The more data that goes into the database, the slower it performs.
+- The database is now a prime bottlekneck.
+- Core reliance on RDMS limits upper scalability.
+
+### Database Cluster (Rating: hundreds)
+
+Now it is time to handle the database being a bottlekneck. We handle it the same way we always do, by adding more instances. At the same time though to really see support higher load, we can't have user session information in memory so we move it into the database instead, removing the need for sticky sessions.
+
+![01](wiki/step-4.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+
+Cons
+
+- No separation between front-end and backend.
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- You are paying for that second instance even when you don't need it.
+- The more data that goes into the database, the slower it performs.
+- The addition of database land tripled the budget in hardware costs. 
+- Core reliance on RDMS limits upper scalability.
+
+## 3-Tier
+
+### Database Cluster (Rating: a thousand)
+
+Before jumping off into higher load ratings, it is important to understand the realization that front-end was best to be separated from backend, giving us what we commonly call 3-tier. Instead of relying on the single backend to do everything, we started buidling standalone Javascript based front-end to dynamically render content asynchronously, and only calling the backend when needed. Contunuing on the current path, that makes our last example now look like this:
+
+![01](wiki/step-5.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+
+Cons
+
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- You are paying for that second instance even when you don't need it.
+- The more data that goes into the database, the slower it performs.
+- The addition of database land tripled the budget in hardware costs. 
+- Core reliance on RDMS limits upper scalability.
+
+### Data warehousing (Rating: a thousand consistently)
+
+A common problem that systems eventually run into given enough time, is that the more data stored in their system, the slower the systems perform. This is basically Relational Databases are not infinately horizontally scalalable. This had lead to what we call data warehousing. This is where the core system generally only contains data relevant to some time window (in years) relative to current, and a specialized database cluster is created for the purpose of historial inquiry. This is also the "big data" problem, which has its own solutions, but it is important to understand where it started.
+
+![01](wiki/step-6.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+- Data is continually and selectively pruned from the system to mitigate sizing issues.
+
+Cons
+
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- You are paying for that second instance even when you don't need it.
+- The addition of database land tripled the budget in hardware costs. 
+- You had to double your budget again by adding a data warehouse.
+- Usage of the data warehouse required specialized tools and knowledge.
+- Core reliance on RDMS limits upper scalability.
+
+## The Cloud
+
+The cloud is simple. it is just a means of having someone else host and maintain your hardware. The biggest mistake companies make when "moving to the cloud" is not considerig that just a "lift and shift" can see a 5-10x cost in hosting. This is because the true savings in the cloud is only paying for what you need, and when you need it.  There is where you want to rely on both Platforms and Software as a Service, but we will start with PaaS.
+
+### Hybrid (Rating: thousands)
+
+The first barrier to cloud entry is that you likely have a ton of snowfakes, meaning unqiuely configured server for which there is no knowledge of how it was actually done. The practice you should have been following is Configuration as Code, and because you likely didn't do that one of the first steps will be figuring out how to reproduce all of that infrastructure. It is best to start with easier, which are always the application servers. How to run an application server in a container is one Google seach away, so start there. Additionaly it is important to reply on the Cloud Provider's continer managemetn solution, so that it can spin up and down containers as needed, instead of having to rely on static hardware, fixed instances, and your own load balancer.
+
+![01](wiki/step-7.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+- Data is continually and selectively pruned from the system to mitigate sizing issues.
+- Running the applications architecures on an elastic container platform allows them to scale up and down as needed.
+
+Cons
+
+- Incentivizes a snowflake architecture by having to fine tune the server hardware differently.
+- You are paying for that second instance even when you don't need it.
+- The addition of database land tripled the budget in hardware costs. 
+- You had to double your budget again by adding a data warehouse.
+- Usage of the data warehouse required specialized tools and knowledge.
+- Core reliance on RDMS limits upper scalability.
+
+### SaaS (Rating: 10k)
+
+*FYI: this is where the Clothes Closet System is, without the data warehousing, thougn only running a single application instance.*
+
+Use software as a service (SaaS) nearly all the time when available. This is because it significantly reduces your complexity and overhead. For example, you no longer need to be a X-Whatever-Database Clustering Expert, you just use it as a service from your cloud platform. However, where you might have been able to get away having devs logging into 20 or so servers to pull logs and gather metrics, that is no longer an option in this environment. That is because everything is dynamic, meaning it can go away if not in use. This forces you to have to being in:
+
+- Monitoring - To know the health of everything
+- Alerting - To know when human intervention is required
+- Centralized Logging - To get to the logs in once place
+
+![01](wiki/step-8.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+- Data is continually and selectively pruned from the system to mitigate sizing issues.
+- Running the applications architecures on an elastic container platform allows them to scale up and down as needed.
+- Using database as a service removed the need to deal with the details yourself.
+
+Cons
+
+- Core reliance on RDMS limits upper scalability.
+
+### Microservices and BFFs (Rating: 100k)
+
+Want to do more? Run more stuff in parallel. Considering that most systems have more than one point of graphical interaction, it is helpful to use the BFF pattern, which has a dedicated backend for each front-end. This both alleviates the load on the solo backend application group, but also allows for specific services for specific clients, as it is highly unlikely that the mobile app receives and sends the same data as the web portal, for example. This also allows each BFF to manage its own session independently, and via a distributed cache insteaf of a database because it is significantly faster. Each of these BFFs is also storing its own data in a NoSQL database, which is faster than RBDMS, with the tradeoff being that you have duplicate data (which isn't really a problem).
+
+The other big change is that the single backend application was broken into multiple applications based on service area. This is highly dependent on what the system does, but allows you to scale at a level of granuliaty that was not possible prior.
+
+![01](wiki/step-9.png)
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+- Data is continually and selectively pruned from the system to mitigate sizing issues.
+- Running the applications architecures on an elastic container platform allows them to scale up and down as needed.
+- Using database as a service removed the need to deal with the details yourself.
+- Highly granular scaling possible.
+- Usage of BFF caching and NoSQL greatly increases scalability.
+
+Cons
+
+- Reliance on RDMS limits upper scalability.
+
+### CQRS and Domain Driven Design (Rating: 1m)
+
+To understand what this means you first need to be familiar with:
+
+1. CAP Theorem
+2. Eventual Consitentancy
+3. CQRS
+4. Domain Driven Design
+
+What the following system does is eliminate the RDBMS as the source of truth, and instead relies on a stream of events by which each domain builds their own representation of that truth based on the individual needs. This critical impact here is that technologies like Kafka are able to handle billions of events per seconds (see LinkedIn) as opposed to traditional messages buses, and well beyond the rate of any NoSQL or RDBMS. The end-result of this though is that the system is eventually consistent, requiring a different approach to reading and writing data, which is where CQRS comes in to play.
+
+- RESTful services get data by directly pulling it using a query out of a NoSQL database.
+- If a RESTful services needs to create, update, or delete data it has two options: 1) Call another RESTful service, 2) dispatch the appropriate event to the Event Bus.
+- Aggregators are responsible for streaming events from the Event Bus, and using the relevant events to construct the data in their domain specific materlialized views.
+
+The domain driven design aspect can be seen in the organization of the system into domains. Each domain functions like its own system, with its only connection outside of the domain being the Event Bus, and knowledge of other RESTful services.
+
+![01](wiki/step-10.png)
 
 
+
+Pros
+
+- Backend and Database independent, allowing us have different optimized servers.
+- Multple backends allows us to handle more load from users.
+- A database cluster removes the database from being the solo bottlekneck.
+- Session is maintained in the database, taking it out of memory.
+- Separation between backend and frontend allows for slightly more load.
+- Data is continually and selectively pruned from the system to mitigate sizing issues.
+- Running the applications architecures on an elastic container platform allows them to scale up and down as needed.
+- Using database as a service removed the need to deal with the details yourself.
+- Highly granular scaling possible.
+- Usage of BFF caching and NoSQL greatly increases scalability.
+- Capable of billions of events per second with the right approach.
+
+Cons
+
+- Complexity.
