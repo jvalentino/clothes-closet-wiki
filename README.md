@@ -34,6 +34,20 @@
     + [Domain/SSL](#domainssl)
     + [Email](#email)
 - [System Cost](#system-cost)
+- - [Architectural Theory](#architectural-theory)
+  * [2-Tier](#2-tier)
+    + [Single Server (Rating: a dozen)](#single-server-rating-a-dozen)
+    + [Dedicated Database Server (Rating: dozens)](#dedicated-database-server-rating-dozens)
+    + [Multi-Backend (Rating: a hundred)](#multi-backend-rating-a-hundred)
+    + [Database Cluster (Rating: hundreds)](#database-cluster-rating-hundreds)
+  * [3-Tier](#3-tier)
+    + [Database Cluster (Rating: a thousand)](#database-cluster-rating-a-thousand)
+    + [Data warehousing (Rating: a thousand consistently)](#data-warehousing-rating-a-thousand-consistently)
+  * [The Cloud](#the-cloud)
+    + [Hybrid (Rating: thousands)](#hybrid-rating-thousands)
+    + [SaaS (Rating: 10k)](#saas-rating-10k)
+    + [Microservices and BFFs (Rating: 100k)](#microservices-and-bffs-rating-100k)
+    + [CQRS and Domain Driven Design (Rating: 1m)](#cqrs-and-domain-driven-design-rating-1m)
 
 # References
 
