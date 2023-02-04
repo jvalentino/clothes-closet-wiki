@@ -167,6 +167,12 @@ Clicking this button will prompt you to mark this appointment as a no-show. Doin
 
 ![01](./wiki/39.png)
 
+##### Reschedule
+
+Pressing the "Reschedule" button will bring up the following dialog, where you can pick any new date/time for the appointment. If you press "Schedule", an existing date/time will be removed from the Google Calendar and updated to be the new date/time:
+
+![01](./wiki/44.png)
+
 #### Multi-Appointment Printing
 
 There are checkboxes next to each appointment, and checking them is used to do a group selection for the purpose of printing out multiple appointments at a time. The "Select All" button will check all the boxes, while the "Unselect All" button will uncheck them all.
