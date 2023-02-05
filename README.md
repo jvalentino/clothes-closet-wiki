@@ -240,6 +240,22 @@ The purpose of this view is to be able to manage appointments that could not be 
 
 ![01](./wiki/33.png)
 
+### Manual Entry
+
+The purpose of this screen is to allow the entry of appointment infomration to the schedule or waitlist aithout any of the normal validation. Specifically:
+
+1. There is no student ID check, so the given student ID does not have to be on the approved list
+2. There is no "already visited" check, so if there has already been an appointment involving a student in the current semester it will not be blocked
+3. There is no check for if the time slot is already occupied.
+
+If no date is selected or the date field is blank, the entered information will be put on the Wait list:
+
+![01](./wiki/45.png)
+
+If a date and time is selected, the entereed information will be scheduled as an appointment:
+
+![01](./wiki/46.png)
+
 # System Overview
 
 ![01](./wiki/clothes-closet.drawio.png)
