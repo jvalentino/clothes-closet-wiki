@@ -19,6 +19,7 @@
         * [Add New Person](#add-new-person)
         * [Cancel Appointment](#cancel-appointment)
         * [Appointment No-Show](#appointment-no-show)
+        * [Reschedule](#reschedule)
       - [Multi-Appointment Printing](#multi-appointment-printing)
     + [Settings Update](#settings-update)
     + [Student ID Upload](#student-id-upload)
@@ -26,6 +27,7 @@
     + [Locales](#locales)
     + [Email Notification](#email-notification)
     + [Wait List](#wait-list)
+    + [Manual Entry](#manual-entry)
 - [System Overview](#system-overview)
   * [(1) Github](#1-github)
   * [(2) Heroku](#2-heroku)
@@ -48,13 +50,6 @@
     + [SaaS (Rating: 10k)](#saas-rating-10k)
     + [Microservices and BFFs (Rating: 100k)](#microservices-and-bffs-rating-100k)
     + [CQRS and Domain Driven Design (Rating: 1m)](#cqrs-and-domain-driven-design-rating-1m)
-
-# References
-
-## User
-
-- [Scheduling Page](https://www.clothescloset.app/) - The website used to schedule an appointment
-- [Admin Login Page](https://www.clothescloset.app//login) - The page used for an admin to login to the management system
 
 ## Developer
 
