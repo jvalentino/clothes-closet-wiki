@@ -373,9 +373,21 @@ spring.mail.properties.mail.smtp.starttls.enable=true
 
 https://www.godaddy.com/help/server-and-port-settings-for-workspace-email-6949 was the only place to get it correct.
 
+## (5) Twilio
 
+> Twilio is an American company based in San Francisco, California, which provides programmable communication tools for making and receiving phone calls, sending and receiving text messages, and performing other communication functions using its web service APIs
 
-# System Cost
+- http://www.twilio.com/
+
+Twilio is the means by which text messages are sent to guardians that provided mobile phone numbers, 24-hours prior to appointments.
+
+Billing gets a little complicated, because you are charged per segment at a rate of $0.0079 per, where a single message is 1 or more segments. In this case, our message is 3 segments, which means we are charged $0.0237 per message.
+
+Consider that there is an average of 23 appointments per week, which would mean as much as 23 messages go out. That would be an average cost of of $0.5451 per week.
+
+However, we do not operate during the summer, which means that this is only for 10 of 12 months. At an estimated 44 weeks of an average of $0.5451 per week, that would be $23.9844 a year.
+
+# System Cost: $341.87/year
 
 | Platform | URL                                                          | Cost                  | Description                                        |
 | -------- | ------------------------------------------------------------ | --------------------- | -------------------------------------------------- |
@@ -384,8 +396,9 @@ https://www.godaddy.com/help/server-and-port-settings-for-workspace-email-6949 w
 | Heroku   | https://dashboard.heroku.com/apps/clothes-closet-rest/resources | $9/month or $108/year | Postges database usingthe Basic Plan               |
 | GoDaddy  | https://account.godaddy.com/receipts                         | $17.99/year           | Domain name with SSL certificate                   |
 | GoDaddy  | https://account.godaddy.com/receipts                         | $23.88/year           | Email Address for SMTP                             |
+| Twilio   | https://console.twilio.com/                                  | $24/year              | Text messages                                      |
 
-Total Cost: $317.87/year
+
 
 # Architectural Theory
 
